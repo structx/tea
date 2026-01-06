@@ -29,5 +29,6 @@ const (
 	kbool
 	kany
 	kstring
+	kstringslice
 	kerr
 )

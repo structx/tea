@@ -5,6 +5,7 @@ import (
 	"os"
 	"runtime"
 	"strconv"
+	"strings"
 	"sync"
 	"time"
 )
@@ -54,18 +55,8 @@ func (l *Logger) Debug(format string, attrs ...Attr) {
 	l.printf(format, DEBUG, attrs...)
 }
 
-// Debugf
-func (l *Logger) Debugf(format string, attrs ...Attr) {
-	l.printf(format, INFO, attrs...)
-}
-
 // Info
-func (l *Logger) Info(format string) {
-	l.printf(format, INFO)
-}
-
-// Infof
-func (l *Logger) Infof(format string, attrs ...Attr) {
+func (l *Logger) Info(format string, attrs ...Attr) {
 	l.printf(format, INFO, attrs...)
 }
 
@@ -118,6 +109,9 @@ func (l *Logger) printf(format string, level Level, attrs ...Attr) {
 				buf = strconv.AppendBool(buf, attr.boolValue)
 			case kstring:
 				buf = strconv.AppendQuote(buf, attr.stringValue)
+			case kstringslice:
+				s := strings.Join(attr.stringSliceValue, ",")
+				buf = strconv.AppendQuote(buf, s)
 			case kerr:
 				buf = strconv.AppendQuote(buf, attr.errValue.Error())
 			}

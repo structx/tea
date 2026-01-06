@@ -35,9 +35,12 @@ func TestLogger_JSON(t *testing.T) {
 		WithWriter(&buf),
 	)
 
-	l.Infof("hello",
+	l.Info("hello",
 		String("user", "alice"),
+		StringSlice("x", []string{"hello", "world"}),
 	)
+
+	fmt.Println(buf.String())
 
 	var result map[string]interface{}
 	if err := json.Unmarshal(buf.Bytes(), &result); err != nil {
