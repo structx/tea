@@ -5,12 +5,13 @@ type Attr struct {
 	key    string
 	kfield kField
 
-	intValue    int
-	int16Value  int16
-	int32Value  int32
-	int64Value  int64
-	stringValue string
-	boolValue   bool
+	intValue         int
+	int16Value       int16
+	int32Value       int32
+	int64Value       int64
+	stringValue      string
+	boolValue        bool
+	stringSliceValue []string
 
 	anyValue any
 
@@ -50,6 +51,11 @@ func String(key, value string) Attr {
 // Any
 func Any(key string, value any) Attr {
 	return Attr{key: key, kfield: kany, anyValue: value}
+}
+
+// StringSlice
+func StringSlice(key string, value []string) Attr {
+	return Attr{key: key, kfield: kstringslice, stringSliceValue: value}
 }
 
 // Error
